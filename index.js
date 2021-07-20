@@ -16,6 +16,8 @@ app.use(express.json());
 //importing routers
 let authRouter = require("./Routes/authRouter.js");
 app.use("/auth", authRouter);
-
+app.get("/", (req, res) => {
+  res.status(200).send("Hello there");
+});
 const PORT = process.env.PORT || 3300;
 app.listen(PORT, () => console.log(`listening to port ${PORT}`));
