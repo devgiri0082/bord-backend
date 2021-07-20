@@ -17,5 +17,5 @@ app.use(express.json());
 let authRouter = require("./Routes/authRouter.js");
 app.use("/auth", authRouter);
 
-const PORT = 3300;
+const PORT = process.env.PORT || 3300;
 app.listen(PORT, () => console.log(`listening to port ${PORT}`));
