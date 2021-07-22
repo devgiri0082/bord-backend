@@ -18,7 +18,7 @@ app.use(cors());
 let authRouter = require("./Routes/authRouter.js");
 app.use("/auth", authRouter);
 app.get("/", (req, res) => {
-  res.status(200).send("Hello there");
+  res.status(200).send("Hello world");
 });
 const PORT = process.env.PORT || 3300;
 app.listen(PORT, () => console.log(`listening to port ${PORT}`));
