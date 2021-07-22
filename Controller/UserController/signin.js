@@ -46,7 +46,7 @@ let signInController = async (username, password) => {
 
 let saveRefreshToken = async (refreshToken, id) => {
   try {
-    let deleting = await RefreshTokenModel.deleteOne({ userId: id });
+    await RefreshTokenModel.deleteOne({ userId: id });
     // console.log(deleting);
     let newRefreshToken = new RefreshTokenModel({
       token: refreshToken,

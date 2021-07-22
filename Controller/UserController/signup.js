@@ -2,12 +2,15 @@ const UserModel = require("../../Model/UserModel");
 const bcrypt = require("bcrypt");
 
 let signUp = async (req, res) => {
-  let { username, email, password, profilePic } = req.body;
+  console.log(req.body);
+  let { name, username, email, password } = req.body;
+  let profilePic = req.file?.path;
   let hashedPassword = await bcrypt.hash(password, 10);
   if (!validateEmail(email))
     return res.status(400).json({ message: "invalid email address" });
   try {
     let response = await signUpController(
+      name,
       username,
       email,
       hashedPassword,
@@ -15,18 +18,21 @@ let signUp = async (req, res) => {
     );
     return res.status(response.code).json({ message: response.message });
   } catch (err) {
+    console.log(err);
     return res.status(500).json({ message: err });
   }
 };
 
-async function signUpController(username, email, password, photo) {
+async function signUpController(name, username, email, password, photo) {
   try {
     let givenUserName = await UserModel.findOne({ username: username });
     if (givenUserName)
       return { code: 400, message: "given username already exist" };
     let givenEmail = await UserModel.findOne({ email: email });
     if (givenEmail) return { code: 400, message: "given email already exist" };
+
     let newUser = new UserModel({
+      name: name,
       username: username,
       email: email,
       password: password,
