@@ -16,9 +16,13 @@ app.use(express.json());
 app.use(cors());
 //importing routers
 let authRouter = require("./Routes/authRouter.js");
+const checkAuthorization = require("./checkAuthorization.js");
 app.use("/auth", authRouter);
 app.get("/", (req, res) => {
   res.status(200).send("Hello world");
+});
+app.use("/authorize", checkAuthorization, (req, res) => {
+  res.status(200).json({ message: req.userInfo });
 });
 const PORT = process.env.PORT || 3300;
 app.listen(PORT, () => console.log(`listening to port ${PORT}`));
