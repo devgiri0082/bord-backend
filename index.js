@@ -21,6 +21,7 @@ app.use("/auth", authRouter);
 app.get("/", (req, res) => {
   res.status(200).send("Hello world");
 });
+app.get("/favicon.ico", (req, res) => res.status(200));
 app.use("/authorize", checkAuthorization, (req, res) => {
   res.status(200).json({ message: req.userInfo });
 });
