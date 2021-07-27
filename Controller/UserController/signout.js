@@ -1,4 +1,4 @@
-const RefreshTokenModel = require("../../Model/refreshTokenModel");
+const RefreshTokenModel = require("../../Model/RefreshTokenModel");
 const UserModel = require("../../Model/UserModel");
 
 let signOut = async (req, res) => {

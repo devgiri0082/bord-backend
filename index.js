@@ -17,11 +17,17 @@ app.use(cors());
 //importing routers
 let authRouter = require("./Routes/authRouter.js");
 const checkAuthorization = require("./checkAuthorization.js");
+const postRouter = require("./Routes/postRouter");
+const followRouter = require("./Routes/FollowRouter");
+const refreshRouter = require("./Routes/refreshRouter");
+const checkRefresh = require("./checkRefresh.js");
 app.use("/auth", authRouter);
+app.use("/post", checkAuthorization, postRouter);
+app.use("/action", checkAuthorization, followRouter);
 app.get("/", (req, res) => {
   res.status(200).send("Hello world");
 });
-app.get("/favicon.ico", (req, res) => res.status(200));
+app.use("/refresh", checkRefresh, refreshRouter);
 app.use("/authorize", checkAuthorization, (req, res) => {
   res.status(200).json({ message: req.userInfo });
 });

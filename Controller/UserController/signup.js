@@ -1,5 +1,6 @@
 const UserModel = require("../../Model/UserModel");
 const bcrypt = require("bcrypt");
+const LinkModel = require("../../Model/LinkModel");
 
 let signUp = async (req, res) => {
   console.log(req.body);
@@ -30,7 +31,6 @@ async function signUpController(name, username, email, password, photo) {
       return { code: 400, message: "given username already exist" };
     let givenEmail = await UserModel.findOne({ email: email });
     if (givenEmail) return { code: 400, message: "given email already exist" };
-
     let newUser = new UserModel({
       name: name,
       username: username,
@@ -39,6 +39,8 @@ async function signUpController(name, username, email, password, photo) {
       picture: photo,
     });
     await newUser.save();
+    let newLink = new LinkModel({ user: newUser._id });
+    await newLink.save();
     return { code: 200, message: "successfully saved the user" };
   } catch (err) {
     console.log(err);

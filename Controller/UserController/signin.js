@@ -1,7 +1,7 @@
 const UserModel = require("../../Model/UserModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const RefreshTokenModel = require("../../Model/refreshTokenModel");
+const RefreshTokenModel = require("../../Model/RefreshTokenModel");
 let signIn = async (req, res) => {
   try {
     let { username, password } = req.body;

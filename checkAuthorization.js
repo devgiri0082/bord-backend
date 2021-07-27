@@ -1,7 +1,6 @@
 let jwt = require("jsonwebtoken");
 const checkAuthorization = (req, res, next) => {
   let header = req.headers.authorization;
-  console.log("checking");
   if (!header)
     return res
       .status(401)
@@ -18,7 +17,6 @@ const checkAuthorization = (req, res, next) => {
         return res.status(400).json({ message: "invalid token" });
       }
       req.userInfo = decoded;
-      console.log("going to next");
       next();
     });
   }
