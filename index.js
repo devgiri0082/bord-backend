@@ -27,7 +27,7 @@ app.use("/auth", authRouter);
 app.use("/post", checkAuthorization, postRouter);
 app.use("/action", checkAuthorization, followRouter);
 app.use("/profile", userRouter);
-app.use("/uploads", express.static(__dirname + "static/uploads"));
+app.use(express.static("public"));
 app.get("/", (req, res) => {
   res.status(200).send("Hello world");
 });
