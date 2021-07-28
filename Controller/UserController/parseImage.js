@@ -4,7 +4,7 @@ const storage = multer.diskStorage({
     cb(null, "static/uploads/");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
+    cb(null, Date.now() + "-" + req.body.username);
   },
 });
 const multiPart = multer({ storage: storage });

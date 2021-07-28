@@ -20,16 +20,31 @@ const checkAuthorization = require("./checkAuthorization.js");
 const postRouter = require("./Routes/postRouter");
 const followRouter = require("./Routes/FollowRouter");
 const refreshRouter = require("./Routes/refreshRouter");
+const userRouter = require("./Routes/userRouter");
 const checkRefresh = require("./checkRefresh.js");
+const UserModel = require("./Model/UserModel.js");
 app.use("/auth", authRouter);
 app.use("/post", checkAuthorization, postRouter);
 app.use("/action", checkAuthorization, followRouter);
+app.use("/profile", userRouter);
+app.use("/uploads", express.static(__dirname + "static/uploads"));
 app.get("/", (req, res) => {
   res.status(200).send("Hello world");
 });
 app.use("/refresh", checkRefresh, refreshRouter);
-app.use("/authorize", checkAuthorization, (req, res) => {
-  res.status(200).json({ message: req.userInfo });
+app.get("/authorize", checkAuthorization, async (req, res) => {
+  try {
+    let givenUser = await UserModel.findOne(
+      { username: req.userInfo.username },
+      { username: 1, _id: 1 }
+    );
+    if (!givenUser) return res.status(400).json({ message: "invalid user" });
+    console.log(givenUser);
+    res.status(200).json({ message: givenUser });
+  } catch (err) {
+    console.log(err);
+    res.status(500, json({ message: err }));
+  }
 });
 const PORT = process.env.PORT || 3300;
 app.listen(PORT, () => console.log(`listening to port ${PORT}`));

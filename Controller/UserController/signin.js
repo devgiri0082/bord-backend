@@ -17,8 +17,8 @@ let signIn = async (req, res) => {
     let refreshToken = jwt.sign(userDetails, process.env.REFRESH_TOKEN_SECRET, {
       expiresIn: process.env.REFRESH_TOKEN_EXPIRATION_TIME,
     });
-    response = await saveRefreshToken(refreshToken, response.message._id);
-    if (response.code === 200)
+    response2 = await saveRefreshToken(refreshToken, response.message._id);
+    if (response2.code === 200)
       return res.status(200).json({
         message: "Login successful",
         accessToken: accessToken,
@@ -53,7 +53,11 @@ let saveRefreshToken = async (refreshToken, id) => {
       userId: id,
     });
     await newRefreshToken.save();
-    return { code: 200, message: "successfully saved the refresh token" };
+    return {
+      code: 200,
+      message: "successfully saved the refresh token",
+      id: id,
+    };
   } catch (err) {
     console.log(err);
     return { code: 500, message: err };
