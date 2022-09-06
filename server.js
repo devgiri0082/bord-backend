@@ -29,7 +29,7 @@ app.use("/action", checkAuthorization, followRouter);
 app.use("/profile", userRouter);
 app.use(express.static("public"));
 app.get("/", (req, res) => {
-  res.status(200).send("Hello world");
+  res.status(200).send("This is working");
 });
 app.use("/refresh", checkRefresh, refreshRouter);
 app.get("/authorize", checkAuthorization, async (req, res) => {
@@ -46,5 +46,5 @@ app.get("/authorize", checkAuthorization, async (req, res) => {
     res.status(500, json({ message: err }));
   }
 });
-const PORT = process.env.PORT || 3300;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`listening to port ${PORT}`));

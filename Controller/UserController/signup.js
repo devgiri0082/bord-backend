@@ -5,6 +5,11 @@ const LinkModel = require("../../Model/LinkModel");
 let signUp = async (req, res) => {
   console.log(req.body);
   let { name, username, email, password } = req.body;
+  if (!name || !username || !password) {
+    return res
+      .status(400)
+      .json({ message: "name, username, email and password is required" });
+  }
   let profilePic = req.file?.path;
   let hashedPassword = await bcrypt.hash(password, 10);
   if (!validateEmail(email))
